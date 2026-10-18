@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<title>2NF</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<h1>Етап 2. Друга нормальна форма (2НФ)</h1>
+<p class="subtitle">Вимога 2НФ: таблиця в 1НФ, і кожен неключовий атрибут залежить від <b>усього</b> первинного ключа, а не від його частини.</p>
+
+<ul class="rules">
+  <li>У таблиці 1НФ ключ складений: <code>(order_id, product_name)</code>.</li>
+  <li><code>order_date</code>, <code>customer_name</code>, <code>customer_address</code> залежать лише від <code>order_id</code> — це <b>часткова залежність</b> → виносимо в таблицю <code>orders</code>.</li>
+  <li>Товар — окрема сутність, що повторюється в різних замовленнях («Мишка») → виносимо в таблицю <code>products</code> із сурогатним ключем <code>product_id</code>.</li>
+  <li>У <code>order_items</code> залишається тільки <code>quantity</code>, яка залежить від повного ключа <code>(order_id, product_id)</code>.</li>
+</ul>
+
+<div class="grid">
+<div>
+<h2>orders</h2>
+<table>
+  <tr>
+    <th class="pk">order_id<small>PK · INT</small></th>
+    <th>order_date<small>DATE</small></th>
+    <th>customer_name<small>VARCHAR(100)</small></th>
+    <th>customer_address<small>VARCHAR(255)</small></th>
+  </tr>
+  <tr><td>101</td><td>2023-03-15</td><td>Мельник</td><td>Хрещатик 1</td></tr>
+  <tr><td>102</td><td>2023-03-16</td><td>Шевченко</td><td>Басейна 2</td></tr>
+  <tr><td>103</td><td>2023-03-17</td><td>Коваленко</td><td>Комп’ютерна 3</td></tr>
+</table>
+</div>
+
+<div>
+<h2>products</h2>
+<table>
+  <tr>
+    <th class="pk">product_id<small>PK · INT</small></th>
+    <th>product_name<small>VARCHAR(100)</small></th>
+  </tr>
+  <tr><td>1</td><td>Лептоп</td></tr>
+  <tr><td>2</td><td>Мишка</td></tr>
+  <tr><td>3</td><td>Принтер</td></tr>
+</table>
+</div>
+
+<div>
+<h2>order_items</h2>
+<table>
+  <tr>
+    <th class="pkfk">order_id<small>PK, FK → orders</small></th>
+    <th class="pkfk">product_id<small>PK, FK → products</small></th>
+    <th>quantity<small>INT</small></th>
+  </tr>
+  <tr><td>101</td><td>1</td><td>3</td></tr>
+  <tr><td>101</td><td>2</td><td>2</td></tr>
+  <tr><td>102</td><td>3</td><td>1</td></tr>
+  <tr><td>103</td><td>2</td><td>4</td></tr>
+</table>
+</div>
+</div>
+
+<ul class="rules">
+  <li>Залишкова проблема: у <code>orders</code> адреса залежить від клієнта, а не від замовлення (транзитивна залежність) → переходимо до 3НФ.</li>
+</ul>
+
+<div class="legend"><span class="pk">PK</span> первинний ключ <span class="fk">FK</span> зовнішній ключ <span class="pkfk">PK, FK</span> частина складеного ключа і зовнішній ключ</div>
+</body>
+</html>
