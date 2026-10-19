@@ -1,6 +1,3 @@
--- Schema built from the ER diagram (3NF): customers, orders, products, order_items.
--- Tables only, without data.
-
 CREATE DATABASE IF NOT EXISTS goit_rdb_hw02
     CHARACTER SET utf8mb4
     COLLATE utf8mb4_unicode_ci;
